@@ -1,11 +1,16 @@
+<div  layout="row" layout-align="center center" ng-if="loading">
+  <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
 <md-content>
   <md-list>
-
-    <md-list-item class="md-3-line" ng-repeat="story in stories">
-      <div class="md-list-item-text" layout="column">
+    <md-list-item class="md-3-line" ng-repeat="story in stories" ng-click="story.show = !story.show">
+      <div class="md-list-item-text" layout="column" ng-if="story.cct">
         <h3>{{ story.school }}</h3>
         <h4>{{ story.cct }}</h4>
-        <p>{{ item.notes }}</p>
+        <div class="complete" layout="row" ng-show="story.show" layout-wrap ng-click="$event.stopPropagation();">
+          <p ng-if="field.field != 'signatures'" flex="50" ng-repeat="field in fields">{{ field.name }}: <span class="black"> {{ story[field.field] }} </span> </p>
+          <p ng-if="field.field == 'signatures'" ng-show="story.signatures" flex="50" ng-repeat="field in fields" ng-click="showSignature(story.signatures); $event.stopPropagation();" >{{ field.name }}  </p>
+        </div>
       </div>
     </md-list-item>
 

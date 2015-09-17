@@ -7,7 +7,16 @@
 
 body {
   padding: 0;
+  background: #F6921A;
 }
+md-content{
+  background: #F6921A;
+}
+
+.complete p{color:black; padding:10px; color:red;}
+.complete .black{color: black;}
+
+body md-list md-list-item button.md-button:not([disabled]):hover{background-color: #F6922C }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
