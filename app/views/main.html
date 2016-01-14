@@ -9,7 +9,7 @@
         <h4>{{ story.cct }}</h4>
         <div class="complete" layout="row" ng-show="story.show" layout-wrap ng-click="$event.stopPropagation();">
           <p ng-if="field.field != 'signatures'" flex="50" ng-repeat="field in fields">{{ field.name }}: <span class="black"> {{ story[field.field] }} </span> </p>
-          <p ng-if="field.field == 'signatures'" ng-show="story.signatures" flex="50" ng-repeat="field in fields" ng-click="showSignature(story.signatures); $event.stopPropagation();" >{{ field.name }}  </p>
+          <p ng-show="story.files" flex="50" ng-click="showFiles(story.files); $event.stopPropagation();" >Archivos  </p>
         </div>
       </div>
     </md-list-item>

@@ -42,6 +42,35 @@ angular.module('educaccionApp')
       );
     };
 
+    $scope.showFiles = function(files) {
+      console.log(files);
+      if (!files) {
+        return;
+      }
+
+      files = files.forEach ? files : Object.keys(files).map(function(k){ return files[k];});
+      console.log(files);
+      var imgs = '<div layout="row">', urls = '<div layout="column">';
+      files.forEach(function (file) {
+        console.log(file);
+        if (file.type && file.type.indexOf('image') === 0) {
+          imgs += '<img ng-src="'+ file.raw +'">';
+        }else {
+          urls += '<a target="_blank" href="'+file.raw+'">'+file.name+'</a> <br/>';
+        }
+      });
+      imgs += '</div>';
+      urls += '</div>';
+        //.content('<img src="'+ base64 +'">')
+      var show =  $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Archivos')
+        .content('<div layout="column">'+imgs+urls+'</div>')
+        .ok('Ok');
+      $mdDialog.show(show);
+
+    };
+
     var firebaseEntries = new Firebase('https://caminoalexito.firebaseio.com/').child('entries');
     $scope.stories = $firebaseArray(firebaseEntries);
 
