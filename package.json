@@ -36,7 +36,8 @@
   },
   "scripts": {
     "test": "grunt test",
-    "build": "./node_modules/grunt-cli/bin/grunt"
+    "build": "./node_modules/grunt-cli/bin/grunt",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
     "angular": "^1.4.5",
