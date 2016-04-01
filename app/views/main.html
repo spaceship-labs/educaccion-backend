@@ -1,9 +1,12 @@
 <div  layout="row" layout-align="center center" ng-if="loading">
   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
-<md-content>
+<md-content ng-show="!loading">
+  <md-checkbox ng-model="filesOnly" aria-label="Checkbox 1">
+    Con Archivos
+  </md-checkbox>
   <md-list>
-    <md-list-item class="md-3-line" ng-repeat="story in stories" ng-click="story.show = !story.show">
+    <md-list-item class="md-3-line" ng-repeat="story in stories | filter: filterFiles" ng-click="story.show = !story.show">
       <div class="md-list-item-text" layout="column" ng-if="story.cct">
         <h3>{{ story.school }}</h3>
         <h4>{{ story.cct }}</h4>

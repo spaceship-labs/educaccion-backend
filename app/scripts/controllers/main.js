@@ -11,6 +11,7 @@
 angular.module('educaccionApp')
   .controller('MainCtrl', function($scope, $firebaseArray, $http, $mdDialog) {
     $scope.loading = true;
+    $scope.filesOnly = true;
     $scope.fields = [
       {field: 'email', name: 'Email'},
       {field: 'direccion', name: 'Dirección'},
@@ -43,16 +44,13 @@ angular.module('educaccionApp')
     };
 
     $scope.showFiles = function(files) {
-      console.log(files);
       if (!files) {
         return;
       }
 
       files = files.forEach ? files : Object.keys(files).map(function(k){ return files[k];});
-      console.log(files);
       var imgs = '<div layout="row">', urls = '<div layout="column">';
       files.forEach(function (file) {
-        console.log(file);
         if (file.type && file.type.indexOf('image') === 0) {
           imgs += '<img ng-src="'+ file.raw +'">';
         }else {
@@ -77,5 +75,12 @@ angular.module('educaccionApp')
     $scope.stories.$loaded(function() {
       $scope.loading = false;
     });
+
+    $scope.filterFiles = function(story) {
+      if ($scope.filesOnly) {
+        return story.files && story.files.length;
+      }
+      return true;
+    };
 
   });
