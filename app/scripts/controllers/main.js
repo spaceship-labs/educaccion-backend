@@ -69,7 +69,7 @@ angular.module('educaccionApp')
 
     };
 
-    var firebaseEntries = new Firebase('https://caminoalexito.firebaseio.com/').child('entries').limitToLast(100);
+    var firebaseEntries = new Firebase('https://caminoalexito.firebaseio.com/').child('entries');
     $scope.stories = $firebaseArray(firebaseEntries);
 
     $scope.stories.$loaded(function() {
