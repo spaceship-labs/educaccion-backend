@@ -69,12 +69,19 @@ angular.module('educaccionApp')
 
     };
 
-    var firebaseEntries = new Firebase('https://caminoalexito.firebaseio.com/').child('entries');
+    var firebaseEntries = new Firebase('https://caminoalexito.firebaseio.com/').child('entries').limitToLast(100);
     $scope.stories = $firebaseArray(firebaseEntries);
 
     $scope.stories.$loaded(function() {
       $scope.loading = false;
     });
+
+    $scope.downloadAll = function(files) {
+      files.forEach(function(file){
+        var blob = dataURLToBlob(file.raw);
+        saveAs(blob, file.name);
+      });
+    };
 
     $scope.filterFiles = function(story) {
       if ($scope.filesOnly) {
@@ -82,5 +89,29 @@ angular.module('educaccionApp')
       }
       return true;
     };
+
+    function dataURLToBlob(dataURL) {
+      //src "https://github.com/ebidel/filer.js/blob/master/src/filer.js#L137";
+      var BASE64_MARKER = ';base64,';
+      if (dataURL.indexOf(BASE64_MARKER) === -1) {
+        var parts = dataURL.split(','),
+          contentTypeData = parts[0].split(':')[1],
+          rawData = decodeURIComponent(parts[1]);
+
+        return new Blob([rawData], {type: contentTypeData});
+      }
+
+      var data = dataURL.split(BASE64_MARKER),
+        contentType = data[0].split(':')[1],
+        raw = window.atob(data[1]),
+        rawLength = raw.length,
+        uInt8Array = new Uint8Array(rawLength);
+
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+
+      return new Blob([uInt8Array], {type: contentType});
+    }
 
   });
